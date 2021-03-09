@@ -9,4 +9,4 @@
         "@helpers/*": ["src/helpers/*"],
       }
     }
-  }
+}

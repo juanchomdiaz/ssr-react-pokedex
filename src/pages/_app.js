@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <link rel="icon" href="favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"

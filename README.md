@@ -1,6 +1,6 @@
 ## SSR POKEDEX REACT
 
-A multilanguage Pokedex made with NextJS, ReactJs 17, hooks, Context API, i18next, react-bootstrap, skeleton loading, jest + enzyme and storybook.
+A multilanguage Pokedex made with NextJS 10, ReactJs 17, hooks, Context API, i18next, react-bootstrap, skeleton loading, jest + enzyme and storybook.
 
 This is the server side rendered version of: [Pokedex React](https://github.com/juanchomdiaz/react-pokedex)
 

@@ -8,14 +8,14 @@ const { publicRuntimeConfig: {pokeapiURL, displayLimit} } = getConfig();
 const axios = Axios.create({ baseURL: pokeapiURL });
 
 const pokeapiService = {
-  getPokemonsTotalCount: async () => {
-    return await axios
+  getPokemonsTotalCount: () => {
+    return axios
       .get('pokemon?offset=0&limit=1')
       .then(resp => resp.data.count)
       .catch((error) => console.log(error.status));
   },
-  getPokemons: async (fromId, uptoId) => {
-    return await Promise.all(
+  getPokemons: (fromId, uptoId) => {
+    return Promise.all(
       range(fromId, uptoId).map((id) => axios.get(`pokemon/${id}/`))
     )
       .then((responses) => responses.map((response) => response.data))

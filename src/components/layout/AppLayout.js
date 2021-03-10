@@ -4,8 +4,6 @@ import { Container, Alert } from "react-bootstrap";
 import PokedexContext from "@contexts/pokedex/PokedexContext";
 import { useTranslation } from "react-i18next";
 
-import './AppLayout.module.scss';
-
 const AppLayout = ({ children }) => {
   const pokedexContext = useContext(PokedexContext);
   const { withError } = pokedexContext;

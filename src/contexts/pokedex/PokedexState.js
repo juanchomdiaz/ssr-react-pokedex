@@ -6,10 +6,6 @@ import PokedexReducer from "./PokedexReducer";
 import {
   LOAD_POKEMONS_START,
   LOAD_POKEMONS_READY,
-  LOAD_POKEMONS_ERROR,
-  LOAD_POKEMONS_DETAILS_START,
-  LOAD_POKEMONS_DETAILS_READY,
-  LOAD_POKEMONS_DETAILS_ERROR,
   LOAD_POKEMON_DETAILS_START,
   LOAD_POKEMON_DETAILS_READY,
   LOAD_POKEMON_DETAILS_ERROR,
@@ -18,36 +14,62 @@ import {
   LOAD_SINGLE_POKEMON_ERROR,
 } from "./PokedexTypes";
 
+import pokeapiService from '@services/pokeapi';
+
 import getConfig from 'next/config';
 
-const { publicRuntimeConfig: { display_limit } } = getConfig();
+const { publicRuntimeConfig: { displayLimit } } = getConfig();
 
 const PokedexState = ({ pokemonsCount, pokemons, children }) => {
   const initialState = {
     withError: false,
-    error: null,
     isReady: true,
-    count: 0,
-    nextUrl: "/pokemon?limit=5",
-    previousUrl: null,
-    currentUrl: "/pokemon?limit=5",
     pokemons: pokemons,
     currentPokemon: null,
 
-    offset: 0,
-    pokemonsCount: pokemonsCount
+    currentStartId: 1,
+    currentEndId: displayLimit,
+    pokemonsCount: pokemonsCount,
+    canNext: true,
+    canPrevious: false
   };
 
   const [state, dispatch] = useReducer(PokedexReducer, initialState);
 
-  //functions
   const fetchNext = () => {
+    let newStartId = state.currentStartId + displayLimit;
+    let newEndId = state.currentEndId + displayLimit;
 
+    if(newEndId > state.pokemonsCount) newEndId = state.pokemonsCount; 
+
+    _loadPokemons(newStartId, newEndId);
   };
 
   const fetchPrevious = () => {
+    let newStartId = state.currentStartId - displayLimit;
+    let newEndId = state.currentStartId - 1;
 
+    _loadPokemons(newStartId, newEndId);
   };
+
+  const _loadPokemons = async (startId, endId) => {
+    dispatch({
+      type: LOAD_POKEMONS_START,
+    });
+
+    let pokemons = await pokeapiService.getPokemons(startId, endId);
+
+    dispatch({
+      type: LOAD_POKEMONS_READY,
+      payload: {
+        pokemons, 
+        currentStartId: startId,
+        currentEndId: endId,
+        canNext: (endId !== state.pokemonsCount),
+        canPrevious: (startId !== 1)
+      },
+    });
+  }
 
   const loadPokemonAbilities = (pokemon) => {
     return Promise.all(
@@ -108,8 +130,8 @@ const PokedexState = ({ pokemonsCount, pokemons, children }) => {
         withError: state.withError,
         isReady: state.isReady,
         pokemons: state.pokemons,
-        hasPrevious: state.previousUrl !== null,
-        hasNext: state.nextUrl !== null,
+        hasPrevious: state.canPrevious,
+        hasNext: state.canNext,
         currentPokemon: state.currentPokemon,
         fetchNext: fetchNext,
         fetchPrevious: fetchPrevious,

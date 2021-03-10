@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import {
   LOAD_POKEMONS_START,
   LOAD_POKEMONS_READY,
@@ -11,7 +12,7 @@ import {
   LOAD_SINGLE_POKEMON_START,
   LOAD_SINGLE_POKEMON_READY,
   LOAD_SINGLE_POKEMON_ERROR,
-} from "./PokedexTypes";
+} from './PokedexTypes';
 
 const PokedexReducer = (state, action) => {
   switch (action.type) {
@@ -19,15 +20,16 @@ const PokedexReducer = (state, action) => {
       return {
         ...state,
         isReady: false,
-        currentUrl: action.payload,
-        currentPokemon: null
+        currentPokemon: null,
       };
     case LOAD_POKEMONS_READY:
       return {
         ...state,
-        count: action.payload.count,
-        nextUrl: action.payload.nextUrl,
-        previousUrl: action.payload.previousUrl,
+        pokemons: action.payload.pokemons,
+        canNext: action.payload.canNext,
+        canPrevious: action.payload.canPrevious,
+        currentStartId: action.payload.currentStartId,
+        currentEndId: action.payload.currentEndId,
         isReady: true,
         withError: false,
       };
@@ -78,18 +80,18 @@ const PokedexReducer = (state, action) => {
     case LOAD_SINGLE_POKEMON_START:
       return {
         ...state,
-        withError: false
+        withError: false,
       };
     case LOAD_SINGLE_POKEMON_READY:
       return {
         ...state,
-        withError: false
+        withError: false,
       };
     case LOAD_SINGLE_POKEMON_ERROR:
       return {
         ...state,
         withError: true,
-        error: action.payload
+        error: action.payload,
       };
     default:
       return state;

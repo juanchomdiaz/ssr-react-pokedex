@@ -13,9 +13,9 @@ export const pokeapiService = {
       .then((resp) => resp.data.count)
       .catch(() => {});
   },
-  getPokemons: async (offset, limit) => {
+  getPokemons: async (fromId, uptoId) => {
     return await Promise.all(
-      range(offset, limit).map((id) => axios.get(`api/v2/pokemon/${id}/`))
+      range(fromId, uptoId).map((id) => axios.get(`api/v2/pokemon/${id}/`))
     )
       .then((responses) => responses.map((response) => response.data))
       .catch(() => {});

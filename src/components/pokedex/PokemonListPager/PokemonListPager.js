@@ -11,14 +11,13 @@ import "./PokemonListPager.scss";
 const PokemonListPager = () => {
   const { t } = useTranslation();
 
-  const pokedexContext = useContext(PokedexContext);
   const {
     isReady,
     hasPrevious,
     hasNext,
     fetchPrevious,
     fetchNext,
-  } = pokedexContext;
+  }  = useContext(PokedexContext);
 
   const handlePreviousClick = () => {
     fetchPrevious();

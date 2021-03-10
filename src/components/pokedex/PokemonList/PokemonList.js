@@ -8,13 +8,7 @@ import { Spinner } from "react-bootstrap";
 import "./PokemonList.scss";
 
 const PokemonList = () => {
-  const pokedexContext = useContext(PokedexContext);
-  const { pokemons, fetchNext } = pokedexContext;
-
-  useEffect(() => {
-    fetchNext();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { pokemons } = useContext(PokedexContext);
 
   return (
     <Fragment>

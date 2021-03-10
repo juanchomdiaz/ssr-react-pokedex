@@ -22,12 +22,15 @@ import {
   LOAD_SINGLE_POKEMON_ERROR,
 } from "./PokedexTypes";
 
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: { display_limit } } = getConfig();
 
 const PokedexState = ({ pokemonsCount, pokemons, children }) => {
   const initialState = {
     withError: false,
     error: null,
-    isReady: false,
+    isReady: true,
     count: 0,
     nextUrl: "/pokemon?limit=5",
     previousUrl: null,
@@ -35,7 +38,8 @@ const PokedexState = ({ pokemonsCount, pokemons, children }) => {
     pokemons: pokemons,
     currentPokemon: null,
 
-    offset: 0
+    offset: 0,
+    pokemonsCount: pokemonsCount
   };
 
   const [state, dispatch] = useReducer(PokedexReducer, initialState);

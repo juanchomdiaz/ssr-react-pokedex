@@ -24,7 +24,7 @@ export default function PokedexPage({ pokemonsCount, pokemons }) {
   );
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const pokemonsCount = await pokeapiService.getPokemonsTotalCount();
   const pokemons = await pokeapiService.getPokemons(1, displayLimit);
 

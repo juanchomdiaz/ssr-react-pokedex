@@ -12,14 +12,14 @@ const pokeapiService = {
     return await axios
       .get('pokemon?offset=0&limit=1')
       .then(resp => resp.data.count)
-      .catch((error) => console.log(error.response.status));
+      .catch((error) => console.log(error.status));
   },
   getPokemons: async (fromId, uptoId) => {
     return await Promise.all(
       range(fromId, uptoId).map((id) => axios.get(`pokemon/${id}/`))
     )
       .then((responses) => responses.map((response) => response.data))
-      .catch((error) => console.log(error.response.status));
+      .catch((error) => console.log(error.status));
   },
 };
 

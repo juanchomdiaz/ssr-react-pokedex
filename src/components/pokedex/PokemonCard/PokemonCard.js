@@ -1,12 +1,10 @@
 import React, { useContext } from "react";
 
-import { Link } from "react-router-dom";
-
-import useImage from "hooks/useImage";
-import PokedexContext from "contexts/pokedex/PokedexContext";
+import useImage from "@hooks/useImage";
+import PokedexContext from "@contexts/pokedex/PokedexContext";
 
 import { Card, Fade, Image } from "react-bootstrap";
-import "./PokemonCard.scss";
+import "./PokemonCard.module.scss";
 
 import Skeleton from "react-loading-skeleton";
 
@@ -19,7 +17,7 @@ const PokemonCard = ({ pokemon }) => {
   const { image, isLoaded } = useImage({ src: imageSrc });
 
   return (
-    <Link to={`/pokedex/${pokemon && pokemon.name}`}>
+    <a to={`/pokedex/${pokemon && pokemon.name}`}>
       <Card className="shadow p-3 mb-5 bg-white rounded">
         <div className="card-img__wrapper">
           <div className="card-img__inner">
@@ -46,7 +44,7 @@ const PokemonCard = ({ pokemon }) => {
           )}
         </div>
       </Card>
-    </Link>
+    </a>
   );
 };
 

@@ -3,10 +3,6 @@ import React, { useReducer } from "react";
 import PokedexContext from "./PokedexContext";
 import PokedexReducer from "./PokedexReducer";
 
-import pokeapi from "config/axios";
-
-import { parseStats } from "helpers/pokeapi";
-
 import {
   LOAD_POKEMONS_START,
   LOAD_POKEMONS_READY,
@@ -46,61 +42,11 @@ const PokedexState = ({ pokemonsCount, pokemons, children }) => {
 
   //functions
   const fetchNext = () => {
-    fetchPokemons(state.nextUrl);
+
   };
 
   const fetchPrevious = () => {
-    fetchPokemons(state.previousUrl);
-  };
 
-  const fetchPokemons = (url) => {
-    dispatch({
-      type: LOAD_POKEMONS_START,
-      payload: url,
-    });
-
-    pokeapi
-      .get(url)
-      .then((res) => {
-        const payload = {
-          count: res.data.count,
-          nextUrl: res.data.next,
-          previousUrl: res.data.previous,
-        };
-
-        dispatch({
-          type: LOAD_POKEMONS_READY,
-          payload: payload,
-        });
-
-        dispatch({
-          type: LOAD_POKEMONS_DETAILS_START,
-        });
-
-        return Promise.all(
-          res.data.results.map((result) => pokeapi.get(result.url))
-        )
-          .then((res) => {
-            const pokemons = res.map((resp) => resp.data);
-
-            dispatch({
-              type: LOAD_POKEMONS_DETAILS_READY,
-              payload: pokemons,
-            });
-          })
-          .catch((error) => {
-            dispatch({
-              type: LOAD_POKEMONS_DETAILS_ERROR,
-              payload: error,
-            });
-          });
-      })
-      .catch((error) => {
-        dispatch({
-          type: LOAD_POKEMONS_ERROR,
-          payload: error,
-        });
-      });
   };
 
   const loadPokemonAbilities = (pokemon) => {

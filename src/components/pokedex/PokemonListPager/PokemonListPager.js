@@ -2,11 +2,11 @@ import React, { useContext, Fragment } from "react";
 
 import { useTranslation } from "react-i18next";
 
-import PokedexContext from "contexts/pokedex/PokedexContext";
-import { scrollToTop } from "helpers/ui";
+import PokedexContext from "@contexts/pokedex/PokedexContext";
+import { scrollToTop } from "@helpers/ui";
 
 import { Button, Row, Col } from "react-bootstrap";
-import "./PokemonListPager.scss";
+import "./PokemonListPager.module.scss";
 
 const PokemonListPager = () => {
   const { t } = useTranslation();

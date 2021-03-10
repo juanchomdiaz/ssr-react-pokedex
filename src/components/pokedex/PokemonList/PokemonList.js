@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, Fragment } from "react";
+import React, { useContext, Fragment } from "react";
 
-import PokedexContext from "contexts/pokedex/PokedexContext";
+import PokedexContext from "@contexts/pokedex/PokedexContext";
 
-import PokemonCard from "components/pokedex/PokemonCard/PokemonCard";
+import PokemonCard from "@components/pokedex/PokemonCard/PokemonCard";
 
 import { Spinner } from "react-bootstrap";
-import "./PokemonList.scss";
+import "./PokemonList.module.scss";
 
 const PokemonList = () => {
   const { pokemons } = useContext(PokedexContext);

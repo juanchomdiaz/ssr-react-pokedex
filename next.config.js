@@ -1,12 +1,10 @@
-const environmentVariables = {
-  publicRuntimeConfig: {
-    pokeapiURL: 'https://pokeapi.co/api/v2/',
-    default_limit: 5,
-  },
-};
+
 
 module.exports = {
-  ...environmentVariables,
+  publicRuntimeConfig: {
+    pokeapiURL: 'https://pokeapi.co/api/v2/',
+    displayLimit: 5,
+  },
   async redirects() {
     return [
       {

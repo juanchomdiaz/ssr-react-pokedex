@@ -8,18 +8,24 @@ const { publicRuntimeConfig: {pokeapiURL, displayLimit} } = getConfig();
 const axios = Axios.create({ baseURL: pokeapiURL });
 
 const pokeapiService = {
-  getPokemonsTotalCount: () => {
-    return axios
-      .get('pokemon?offset=0&limit=1')
-      .then(resp => resp.data.count)
-      .catch((error) => console.log(error.status));
+  getPokemonsTotalCount: async () => {
+    try {
+      const resp = await axios
+        .get('pokemon?offset=0&limit=1');
+      return resp.data.count;
+    } catch (error) {
+      return console.log(error.status);
+    }
   },
-  getPokemons: (fromId, uptoId) => {
-    return Promise.all(
-      range(fromId, uptoId).map((id) => axios.get(`pokemon/${id}/`))
-    )
-      .then((responses) => responses.map((response) => response.data))
-      .catch((error) => console.log(error.status));
+  getPokemons: async (fromId, uptoId) => {
+    try {
+      const responses = await Promise.all(
+        range(fromId, uptoId).map((id) => axios.get(`pokemon/${id}/`))
+      );
+      return responses.map((response) => response.data);
+    } catch (error) {
+      return console.log(error.status);
+    }
   },
 };
 

@@ -1,4 +1,4 @@
-## SSR POKEDEX REACT (FACTORIAL REFRESH)
+## SSR POKEDEX REACT
 
 A multilanguage Pokedex made with NextJS, ReactJs 17, hooks, Context API, i18next, react-bootstrap, skeleton loading, jest + enzyme and storybook.
 

@@ -22,7 +22,8 @@ import {
   LOAD_SINGLE_POKEMON_ERROR,
 } from "./PokedexTypes";
 
-const PokedexState = (props) => {
+
+const PokedexState = ({ pokemonsCount, pokemons, children }) => {
   const initialState = {
     withError: false,
     error: null,
@@ -31,8 +32,10 @@ const PokedexState = (props) => {
     nextUrl: "/pokemon?limit=5",
     previousUrl: null,
     currentUrl: "/pokemon?limit=5",
-    pokemons: [],
+    pokemons: pokemons,
     currentPokemon: null,
+
+    offset: 0
   };
 
   const [state, dispatch] = useReducer(PokedexReducer, initialState);
@@ -163,7 +166,7 @@ const PokedexState = (props) => {
         fetchPokemonDetails: fetchPokemonDetails,
       }}
     >
-      {props.children}
+      {children}
     </PokedexContext.Provider>
   );
 };

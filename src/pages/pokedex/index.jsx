@@ -1,6 +1,8 @@
 import pokeapiService from '@services/pokeapi';
 
-const DEFAULT_LIMIT = 5; /* This could be setted in env vars using next/getconfig */
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: { display_limit } } = getConfig();
 
 export default function PokedexPage({ pokemonsCount, pokemons }) {
   return (
@@ -12,7 +14,7 @@ export default function PokedexPage({ pokemonsCount, pokemons }) {
 
 export const getServerSideProps = async () => {
   const pokemonsCount = await pokeapiService.getPokemonsTotalCount();
-  const pokemons = await pokeapiService.getPokemons(1, DEFAULT_LIMIT);
+  const pokemons = await pokeapiService.getPokemons(1, display_limit);
 
   return {
     props: { pokemonsCount, pokemons },

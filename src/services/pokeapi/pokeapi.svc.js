@@ -1,9 +1,10 @@
 import axios from '@libraries/axios';
 import range from '@helpers/arrays';
 
-const axios = Axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/',
-}); /* API url could be setted in env vars using next/getconfig */
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig: {pokeapiURL} } = getConfig();
+const axios = Axios.create({ baseURL: pokeapiURL });
 
 export const pokeapiService = {
   getPokemonsTotalCount: async () => {

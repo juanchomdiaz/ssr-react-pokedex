@@ -17,12 +17,16 @@ const pokeapiService = {
       return console.log(error.status);
     }
   },
-  getPokemons: async (fromId, uptoId) => {
+  getPokemons: async (offset) => {
     try {
-      const responses = await Promise.all(
-        range(fromId, uptoId).map((id) => axios.get(`pokemon/${id}/`))
+      const pagerResponse = await axios.get(`pokemon?offset=${offset}&limit=${displayLimit}`);
+
+      const pokemonResponses = await Promise.all(
+        pagerResponse.data.results.map((result) => axios.get(`pokemon/${result.name}/`))
       );
-      return responses.map((response) => response.data);
+
+      return pokemonResponses.map((response) => response.data);
+
     } catch (error) {
       return console.log(error.status);
     }

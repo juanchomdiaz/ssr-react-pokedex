@@ -27,8 +27,7 @@ const PokedexState = ({ pokemonsCount, pokemons, children }) => {
     pokemons: pokemons,
     currentPokemon: null,
 
-    currentStartId: 1,
-    currentEndId: displayLimit,
+    currentOffset: 0,
     pokemonsCount: pokemonsCount,
     canNext: true,
     canPrevious: false
@@ -37,36 +36,31 @@ const PokedexState = ({ pokemonsCount, pokemons, children }) => {
   const [state, dispatch] = useReducer(PokedexReducer, initialState);
 
   const fetchNext = () => {
-    let newStartId = state.currentStartId + displayLimit;
-    let newEndId = state.currentEndId + displayLimit;
+    let newOffset = state.currentOffset + displayLimit;
 
-    if(newEndId > state.pokemonsCount) newEndId = state.pokemonsCount; 
-
-    _loadPokemons(newStartId, newEndId);
+    _loadPokemons(newOffset);
   };
 
   const fetchPrevious = () => {
-    let newStartId = state.currentStartId - displayLimit;
-    let newEndId = state.currentStartId - 1;
+    let newOffset = state.currentOffset - displayLimit;
 
-    _loadPokemons(newStartId, newEndId);
+    _loadPokemons(newOffset);
   };
 
-  const _loadPokemons = async (startId, endId) => {
+  const _loadPokemons = async (newOffset) => {
     dispatch({
       type: LOAD_POKEMONS_START,
     });
 
-    let pokemons = await pokeapiService.getPokemons(startId, endId);
+    let pokemons = await pokeapiService.getPokemons(newOffset);
 
     dispatch({
       type: LOAD_POKEMONS_READY,
       payload: {
         pokemons, 
-        currentStartId: startId,
-        currentEndId: endId,
-        canNext: (endId !== state.pokemonsCount),
-        canPrevious: (startId !== 1)
+        currentOffset: newOffset,
+        canNext: (newOffset < state.pokemonsCount),
+        canPrevious: (newOffset > 0)
       },
     });
   }

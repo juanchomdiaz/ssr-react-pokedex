@@ -28,8 +28,7 @@ const PokedexReducer = (state, action) => {
         pokemons: action.payload.pokemons,
         canNext: action.payload.canNext,
         canPrevious: action.payload.canPrevious,
-        currentStartId: action.payload.currentStartId,
-        currentEndId: action.payload.currentEndId,
+        currentOffset: action.payload.currentOffset,
         isReady: true,
         withError: false,
       };
